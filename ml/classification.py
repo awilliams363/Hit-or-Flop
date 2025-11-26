@@ -6,6 +6,10 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import classification_report, accuracy_score
+import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix
+import seaborn as sns
+
 
 def load_and_merge_data():
     movies = pd.read_csv("data/movies_metadata.csv", low_memory=False)
@@ -66,6 +70,25 @@ def train_models(X, y):
     print("----- Naive Bayes Results -----")
     print("Accuracy:", accuracy_score(y_test, y_pred_nb))
     print(classification_report(y_test, y_pred_nb))
+
+        # ---- CONFUSION MATRIX VISUALIZATION ----
+    cm_knn = confusion_matrix(y_test, y_pred_knn)
+    cm_nb = confusion_matrix(y_test, y_pred_nb)
+
+    plt.figure(figsize=(6,4))
+    sns.heatmap(cm_knn, annot=True, fmt="d", cmap="Blues")
+    plt.title("kNN Confusion Matrix")
+    plt.xlabel("Predicted")
+    plt.ylabel("Actual")
+    plt.show()
+
+    plt.figure(figsize=(6,4))
+    sns.heatmap(cm_nb, annot=True, fmt="d", cmap="Greens")
+    plt.title("Naive Bayes Confusion Matrix")
+    plt.xlabel("Predicted")
+    plt.ylabel("Actual")
+    plt.show()
+
 
 if __name__ == "__main__":
     df = load_and_merge_data()
