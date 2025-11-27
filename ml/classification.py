@@ -9,6 +9,9 @@ from sklearn.metrics import classification_report, accuracy_score
 import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix
 import seaborn as sns
+from sklearn.metrics import mean_squared_error, mean_absolute_error
+import numpy as np
+
 
 
 def load_and_merge_data():
@@ -88,6 +91,20 @@ def train_models(X, y):
     plt.xlabel("Predicted")
     plt.ylabel("Actual")
     plt.show()
+
+    # ---- RMSE & MAE FOR KNN ----
+    rmse_knn = np.sqrt(mean_squared_error(y_test, y_pred_knn))
+    mae_knn = mean_absolute_error(y_test, y_pred_knn)
+
+    print("KNN RMSE:", rmse_knn)
+    print("KNN MAE:", mae_knn)
+
+    # ---- RMSE & MAE FOR NAIVE BAYES ----
+    rmse_nb = np.sqrt(mean_squared_error(y_test, y_pred_nb))
+    mae_nb = mean_absolute_error(y_test, y_pred_nb)
+
+    print("Naive Bayes RMSE:", rmse_nb)
+    print("Naive Bayes MAE:", mae_nb)
 
 
 if __name__ == "__main__":
